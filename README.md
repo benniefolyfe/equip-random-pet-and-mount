@@ -1,1 +1,1 @@
-# equip-random-pet-mount
+Equip Random Pet & Mount
