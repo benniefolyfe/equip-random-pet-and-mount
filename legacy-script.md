@@ -1,6 +1,6 @@
 ### Auto Change Pet and Mount Randomly
 
-_Maintained by [[User:Benniefolyfe|Benniefolyfe]]_
+_Maintained by @benniefolyfe_
 
 This script will change your pet and mount randomly. It will not do anything if you have only 1 or 0 pet / mount.
 You just need to set your own User ID and API Token first in place of #HabiticaUserID# and #HabiticaAPIToken#, and then set the trigger with the interval you prefer. (I set it to daily change, during the night, so the morning gives me a new surprise).
