@@ -9,7 +9,7 @@ If you want to change only the pet or only the mount, remove the block of code b
 * Go to script.google.com. If this is your first script, this will automatically create a new Google script for you and open an editor for it. Otherwise, edit an existing project by clicking the pencil icon next to it, or create another.
 * Paste the code snippet below into the editor, replacing the spaces marked #HabiticaUserID# and #HabiticaAPIToken# with [Habitica User ID and API Token]() (leave the quotes). These can be found under the API tab in your Habitica settings.
 
-See script here: 
+See script here: [Auto Change Pet and Mount Randomly](https://github.com/benniefolyfe/equip-random-pet-and-mount/blob/main/legacy-script.js)
 
 * If you are interested only to the change of the pet remove the block of code below "randomly change the mount". 
 * If you are interested only to the change of the mount remove the block of code below "randomly change the pet.
