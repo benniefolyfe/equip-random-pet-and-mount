@@ -1,5 +1,5 @@
 /************************************************************\
-*  Equip Random Pet & Mount, v 2.0 updated by @benniefolyfe  *
+*  Equip Random Pet & Mount, v 2.1 updated by @benniefolyfe  *
 *            Script contributions by @eyeshield77            *
 *                Original script by anonymous                *
 \************************************************************/
@@ -19,8 +19,11 @@ const API_Token = "[API Token]" // Do not share this with anyone
 *  See the full list of options at the bottom of this script. *
 \*************************************************************/
 
-var petType = new RegExp('Bear|Amber|Nudibranch') // Add your desired pet types here
-var mountType = new RegExp('Wolf|Fox|Base') // Add your desired mount types here
+var petLimit = new RegExp('Bear|Amber|Nudibranch') // Add your desired pet types here. This will only affect the "include" functions.
+var mountLimit = new RegExp('Wolf|Fox|Base') // Add your desired mount types here. This will only affect the "include" functions.
+
+var petExcept = new RegExp('Skeleton|Zombie|White|Shade') // Add pet types you do NOT wish to include here. This will only affect the "except" functions.
+var mountExcept = new RegExp('Skeleton|Zombie|White|Shade') // Add mount types you do NOT wish to include here. This will only affect the "except" functions.
 
 /*********************************************\
 *  No need to edit anything below this line.  *
@@ -125,7 +128,7 @@ function randomMount() {
   }
 }
 
-function limitedPetandMount() {
+function limitPetandMount() {
 
   /** get the pets and mounts owned within the limits */
 
@@ -134,9 +137,9 @@ function limitedPetandMount() {
   var parsed = JSON.parse(response);
   var items = parsed.data.items;
   var pets = Object.keys(items.pets).filter(p => items.pets[p]);
-      pets = pets.filter(name => name.match(petType)); 
+      pets = pets.filter(name => name.match(petLimit)); 
   var mounts = Object.keys(items.mounts).filter(m => items.mounts[m]);
-      mounts = mounts.filter(name => name.match(mountType)); 
+      mounts = mounts.filter(name => name.match(mountLimit)); 
 
   /** randomly change the pet within the limits */
 
@@ -165,7 +168,7 @@ function limitedPetandMount() {
   }
 }
 
-function limitedPet() {
+function limitPet() {
 
   /** get the pets owned within the limits */
 
@@ -174,9 +177,7 @@ function limitedPet() {
   var parsed = JSON.parse(response);
   var items = parsed.data.items;
   var pets = Object.keys(items.pets).filter(p => items.pets[p]);
-      pets = pets.filter(name => name.match(petType)); 
-  var mounts = Object.keys(items.mounts).filter(m => items.mounts[m]);
-      mounts = mounts.filter(name => name.match(mountType)); 
+      pets = pets.filter(name => name.match(petLimit)); 
 
   /** randomly change the pet within the limits */
 
@@ -192,7 +193,7 @@ function limitedPet() {
   }
 }
 
-function limitedMount() {
+function limitMount() {
 
   /** get the mounts owned within the limits */
 
@@ -200,10 +201,98 @@ function limitedMount() {
   var response = UrlFetchApp.fetch("https://habitica.com/api/v3/user" + "?userFields=" + "items", params)
   var parsed = JSON.parse(response);
   var items = parsed.data.items;
-  var pets = Object.keys(items.pets).filter(p => items.pets[p]);
-      pets = pets.filter(name => name.match(petType)); 
   var mounts = Object.keys(items.mounts).filter(m => items.mounts[m]);
-      mounts = mounts.filter(name => name.match(mountType)); 
+      mounts = mounts.filter(name => name.match(mountLimit)); 
+
+  /** randomly change the mount within the limits */
+  
+  if (mounts.length > 0) {
+    // remove current mount from list of new mount candidates
+    if (mounts.includes(items.currentMount)) {
+      var currentMountIndex = mounts.indexOf(items.currentMount);
+      mounts.splice(currentMountIndex, 1);
+    }
+    var randomMount = mounts[Math.floor(Math.random() * mounts.length)];
+    params.method = "post";
+    UrlFetchApp.fetch("https://habitica.com/api/v3/user/equip/mount/" + randomMount, params)
+  }
+}
+
+function exceptPetandMount() {
+
+  /** get the pets and mounts owned minus the exceptions */
+
+  params.method = "get";
+  var response = UrlFetchApp.fetch("https://habitica.com/api/v3/user" + "?userFields=" + "items", params)
+  var parsed = JSON.parse(response);
+  var items = parsed.data.items;
+  var pets = Object.keys(items.pets).filter(p => items.pets[p]);
+      pets = pets.filter(name => !name.match(petExcept)); 
+  var mounts = Object.keys(items.mounts).filter(m => items.mounts[m]);
+      mounts = mounts.filter(name => !name.match(mountExcept)); 
+
+  /** randomly change the pet minus the exceptions */
+
+  if (pets.length > 0) {
+    // remove current pet from list of new pet candidates
+    if (pets.includes(items.currentPet)) {
+      var currentPetIndex = pets.indexOf(items.currentPet);
+      pets.splice(currentPetIndex, 1);
+    }
+    var randomPet = pets[Math.floor(Math.random() * pets.length)];
+    params.method = "post";
+    UrlFetchApp.fetch("https://habitica.com/api/v3/user/equip/pet/" + randomPet, params)
+  }
+
+  /** randomly change the mount minus the exceptions */
+  
+  if (mounts.length > 0) {
+    // remove current mount from list of new mount candidates
+    if (mounts.includes(items.currentMount)) {
+      var currentMountIndex = mounts.indexOf(items.currentMount);
+      mounts.splice(currentMountIndex, 1);
+    }
+    var randomMount = mounts[Math.floor(Math.random() * mounts.length)];
+    params.method = "post";
+    UrlFetchApp.fetch("https://habitica.com/api/v3/user/equip/mount/" + randomMount, params)
+  }
+}
+
+function exceptPet() {
+
+  /** get the pets owned within the limits */
+
+  params.method = "get";
+  var response = UrlFetchApp.fetch("https://habitica.com/api/v3/user" + "?userFields=" + "items", params)
+  var parsed = JSON.parse(response);
+  var items = parsed.data.items;
+  var pets = Object.keys(items.pets).filter(p => items.pets[p]);
+      pets = pets.filter(name => !name.match(petExcept)); 
+  
+  /** randomly change the pet within the limits */
+
+  if (pets.length > 0) {
+    // remove current pet from list of new pet candidates
+    if (pets.includes(items.currentPet)) {
+      var currentPetIndex = pets.indexOf(items.currentPet);
+      pets.splice(currentPetIndex, 1);
+    }
+    var randomPet = pets[Math.floor(Math.random() * pets.length)];
+    params.method = "post";
+    UrlFetchApp.fetch("https://habitica.com/api/v3/user/equip/pet/" + randomPet, params)
+  }
+}
+
+function exceptMount() {
+
+  /** get the mounts owned within the limits */
+
+  params.method = "get";
+  var response = UrlFetchApp.fetch("https://habitica.com/api/v3/user" + "?userFields=" + "items", params)
+  var parsed = JSON.parse(response);
+  var items = parsed.data.items;
+  var mounts = Object.keys(items.mounts).filter(m => items.mounts[m]);
+      mounts = mounts.filter(name => !name.match(mountExcept)); 
 
   /** randomly change the mount within the limits */
   
