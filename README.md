@@ -7,6 +7,7 @@ Please visit the [Equip Random Pet & Mount](https://habitica.fandom.com/wiki/Goo
 
 ## Tips
 * Set a trigger to change your pet daily during the night, so the morning gives you a new surprise.
+* Use multiple triggers to see your pet change automatically throughout the day
 * Use the <code>petLimit</code> and <code>mountLimit</code> variables and the <code>limit</code> functions to choose what types of pets and mounts you want to randomize.
 * Use the <code>petExcept</code> and <code>mountExcept</code> variables and the <code>except</code> functions to exclude types of pets you don't want to randomize. This can be helpful in avoiding phobias.
 
