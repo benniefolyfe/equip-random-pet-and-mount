@@ -14,8 +14,8 @@ You can find the code here: [Google Apps Script](https://script.google.com/home/
 
 ## Modifications from prior version
  
-* Added 5 function options
-* Added options to limit randomization to specific types of pets and mounts _(code contributed by @eyeshield77)_
+* Added 8 function options
+* Added options to (1) limit to or (2) exclude specific types of pets and mounts _([1]code contributed by [@eyeshield77](https://habitica.com/profile/0a005b3a-3ec1-48ca-ae1f-78bcc0e59a2b), [2] request made by [@Polyglottericus](https://habitica.com/profile/128c50f0-3f5c-47aa-94b9-f293a4920d0f))_
 * Redesigned script and variable names to make use more intuitive
 * Added a list of egg, potion, and special types to use in operating the script
 * Updated instructions in the Wiki to be more comprehensive
